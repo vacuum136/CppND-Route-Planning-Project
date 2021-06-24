@@ -55,12 +55,52 @@ int main(int argc, const char **argv)
     // TODO 1: Declare floats `start_x`, `start_y`, `end_x`, and `end_y` and get
     // user input for these values using std::cin. Pass the user input to the
     // RoutePlanner object below in place of 10, 10, 90, 90.
-
+    float start_x, start_y, end_x, end_y;
+    // get user input for start point
+    std::cout << "Please give two numbers between 0-100 for the coordinates of start point: ";
+    while(true)
+    {
+        //if input only with numerical charactors
+        if(std::cin >> start_x >> start_y){  
+            //check if the inputs are in range
+            if(start_x>=0 && start_x <=100 && start_y>=0 && start_y <=100){ 
+                std::cout << "start point: (" << start_x <<"," << start_y << ")\n";
+                break;
+            }else{
+                std::cout << "Error! Please input two numbers between 0-100: ";
+            }
+        }else{ //input failed for containing non numerical charactors
+            std::cout << "Error! Only numbers between 0-100 acceptable. Please input again: ";
+            std::cin.clear();
+            char c;
+            while ((c = getchar()) != '\n');
+        }
+    }
+    //get user input for end point
+    std::cout << "Please give two numbers between 0-100 for the coordinates of end point: ";
+    while(true)
+    {
+        //if input only with numerical charactors
+        if(std::cin >> end_x >> end_y){
+            //check if the inputs are in range
+            if(end_x>=0 && end_x <=100 && end_y>=0 && end_y <=100){
+                std::cout << "End point: (" << end_x <<"," << end_y << ")\n";
+                break;
+            }else{
+                std::cout << "Error! Please input two numbers between 0-100: ";
+            }
+        }else{ //input failed for containing non numerical charactors
+            std::cout << "Error! Only numbers between 0-100 acceptable. Please input again: ";
+            std::cin.clear();
+            char c;
+            while ((c = getchar()) != '\n');
+        }
+    }
     // Build Model.
     RouteModel model{osm_data};
 
     // Create RoutePlanner object and perform A* search.
-    RoutePlanner route_planner{model, 10, 10, 90, 90};
+    RoutePlanner route_planner{model,start_x, start_y, end_x, end_y};
     route_planner.AStarSearch();
 
     std::cout << "Distance: " << route_planner.GetDistance() << " meters. \n";
